@@ -1,0 +1,38 @@
+# Entorno Virtual de Python
+.venv/
+venv/
+ENV/
+env/
+ENV/
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Salidas de compilación de PyInstaller
+build/
+dist/
+*.spec
+
+# Archivos de configuración locales (Contienen credenciales privadas de Spotify)
+downloader_config.json
+
+# Archivos temporales de pruebas creados durante el desarrollo
+test_spotify.py
+test_playlist.py
+test_spotapi.py
+test_groover.py
+test_token.py
+patch_gui.py
+convert_icon.py
+track_union.json
+*.mp3
+*.m4a
+*.flac
+*.wav
+.spotdl/
+
+# Logs del sistema
+*.log
