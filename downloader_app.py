@@ -41,6 +41,12 @@ import tkinter as tk
 from tkinter import filedialog
 import customtkinter as ctk
 
+def get_sys_cmd(proxy_arg):
+    if getattr(sys, 'frozen', False):
+        return [sys.executable, proxy_arg]
+    else:
+        return [sys.executable, os.path.abspath(sys.argv[0]), proxy_arg]
+
 # Set initial window styling configuration
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("green")
@@ -414,7 +420,7 @@ class DownloaderApp(ctk.CTk):
     def install_ffmpeg_thread(self):
         try:
             self.log("Iniciando descarga automatizada de FFmpeg mediante spotDL...\n")
-            cmd = [sys.executable, "-m", "spotdl", "--download-ffmpeg"]
+            cmd = get_sys_cmd("--run-spotdl") + ["--download-ffmpeg"]
             process = subprocess.Popen(
                 cmd, 
                 stdout=subprocess.PIPE, 
@@ -547,16 +553,16 @@ class DownloaderApp(ctk.CTk):
 
             if is_spotify:
                 self.log("[Descarga] Iniciando motor spotDL...\n")
-                cmd = [
-                    sys.executable, "--run-spotdl", "download", url,
+                cmd = get_sys_cmd("--run-spotdl") + [
+                    "download", url,
                     "--format", format_val,
                     "--bitrate", bitrate_val,
                     "--simple-tui"
                 ]
             else:
                 self.log("[Descarga] Iniciando motor yt-dlp...\n")
-                cmd = [
-                    sys.executable, "--run-ytdlp", url,
+                cmd = get_sys_cmd("--run-ytdlp") + [
+                    url,
                     "-x", "--audio-format", format_val,
                     "--audio-quality", "320K" if bitrate_val == "320k" else "0" if bitrate_val == "disable" else bitrate_val,
                     "--yes-playlist",
